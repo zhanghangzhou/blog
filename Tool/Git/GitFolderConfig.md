@@ -9,3 +9,4 @@ Git Folder Configuration
   git push -u origin master
   git config --global user.name "zhanghangzhou"
   git config --global user.email "zhanghangzhou@gmail.com"
+g
