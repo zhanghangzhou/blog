@@ -40,4 +40,4 @@ IDEA Key Mapping
 > Select Some Code Fragment, Choose try/catch, if, for etc... to Generate Code
 
 - Ctrl + Alt + V
-> Define select Some Code Fragment to a variable
+> Change select Some Code Fragment to a variable
