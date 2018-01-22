@@ -37,6 +37,7 @@ keytool -import -alias server -keystore server.jks -trustcacerts -storepass 1234
    maxThreads="500" SSLEnabled="true" scheme="https" secure="true"
    clientAuth="false" sslProtocol="TLS" sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2"
    keystoreFile="bsam.jks" keystorePass="changeit" keystoreType="JKS"
+   ciphers="TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA"
    connectionTimeout="5000" />
 ```
 > sslEnabledProtocols：  
@@ -52,6 +53,7 @@ keytool -import -alias server -keystore server.jks -trustcacerts -storepass 1234
 		scheme="https" secure="true" SSLEnabled="true"
 		clientAuth="true" sslProtocol="TLS" sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2"
 		keystoreFile="server.jks" keystorePass="123456"
+    ciphers="TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA"
 		truststoreFile="server.jks" truststorePass="123456"/>
 ```
 
@@ -67,7 +69,9 @@ keytool -import -alias server -keystore server.jks -trustcacerts -storepass 1234
 > sslEnabledProtocols在setProtocol的基础上详细协议配置
 sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2"
 
- > 可以配置需要支持的加密算法 ciphers="TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_RC4_128_SHA,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,SSL_RSA_WITH_RC4_128_SHA"
+ > 为了安全及适用于最新版的浏览器，需要配置支持的加密算法
+``` ciphers="TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA"
+```
 
 # 5 配置http自动跳转到https
 ## 5.1 配置server.xml文件
@@ -81,7 +85,7 @@ sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2"
 ## 5.2 配置tomcat/conf/web.xml文件
 > 在web-app节点中（如在</web-app>前）添加如下配置。
 
-```xml
+``` xml
 <login-config>
   <auth-method>CLIENT-CERT</auth-method>
   <realm-name>Client Cert Users-only Area</realm-name>
@@ -91,7 +95,7 @@ sslEnabledProtocols="TLSv1,TLSv1.1,TLSv1.2"
     <web-resource-name >SSL</web-resource-name>
     <url-pattern>/*</url-pattern>
   </web-resource-collection>
-    <user-data-constraint>
+  <user-data-constraint>
     <transport-guarantee>CONFIDENTIAL</transport-guarantee>
   </user-data-constraint>
 </security-constraint>
